@@ -5,4 +5,4 @@ in React.js, Next.js, TypeScript
 
 # FR1
 
-![Screenshot](screenshots/tenantLoginPage.png)
+![Screenshot](screenshots/FR1/tenantLoginPage.png)
