@@ -1,38 +1,14 @@
-
 "use client"
 
-import RequestForm from "@/components/RequestForm";
-import { initializeApp } from "firebase/app";
-import { doc, collection, getDocs, addDoc, getFirestore } from "firebase/firestore";
+import Link from "next/link";
+import { useState } from "react"
 
-export default async function Home() {
-  const firebaseConfig = {
-    apiKey: "AIzaSyCzhrEb9IT3V-Q0jyb-jaYg5sdQSHAVJww",
-    authDomain: "apartmentsystem-63dcf.firebaseapp.com",
-    projectId: "apartmentsystem-63dcf",
-    storageBucket: "apartmentsystem-63dcf.appspot.com",
-    messagingSenderId: "500465745032",
-    appId: "1:500465745032:web:f46376630bdd62363d733d"
-  };
-  
-  const app = initializeApp(firebaseConfig);
-  const database = getFirestore(app);
+export default function Home() {
+  const [id, setID] = useState(0);
 
-  const tenantsQuery = await getDocs(collection(database, "tenants"))
-
-  return (<>
-    <RequestForm tenantsQuery={tenantsQuery.docs}></RequestForm>
-    <div className={"maintenenceStaff"}>
-      <div className={"maintenenceRequestList"}>
-
-      </div>
-    </div>
-    <div className={"manager"}>
-      <div className={"managerTenantList"}>
-
-      </div>
-
-
-    </div>
-  </>)
+  return (<div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection:"column", border: "1px solid black", backgroundColor: "tan", borderRadius:"3px" }}>
+    <span style={{fontSize:"24px", margin:"20px"}}>Enter ID: </span>
+    <input style={{padding: "10px", fontSize:"20px", margin:"20px"}} onChange={(event) => setID(() => Number(event.target.value))}></input>
+    <Link style={{fontSize: "30px", margin:"20px"}} href={`/tenants/${id}`}>Then Click Here</Link>
+  </div>)
 }

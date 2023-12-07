@@ -22,6 +22,6 @@ export default async function Home() {
 
   return (<>
     <TenantForm tenantAmount={tenantsQuery.docs.length}></TenantForm>
-    {tenantsQuery.docs.map((doc: any) => <TenantRequest doc={doc}></TenantRequest>)}
+    {tenantsQuery.docs.map((doc: any) => <TenantRequest key={doc.id} doc={doc}></TenantRequest>)}
     </>)
 }

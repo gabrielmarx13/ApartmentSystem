@@ -3,7 +3,7 @@
 import { Timestamp, addDoc, collection, getFirestore } from "firebase/firestore";
 import { useState } from "react";
 
-export default function TenantForm({size}: any) {
+export default function TenantForm({ tenantAmount }: any) {
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
@@ -13,60 +13,67 @@ export default function TenantForm({size}: any) {
     const database = getFirestore();
 
     return (
-        <div className={"tenantAddForm"}>
-            <span>  Tenant Name:</span>
-            <input onChange={(event) => {
-                setName(() => event.target.value)
-            }}></input>
-            <span>{name}</span>
+        <div className={"tenantAddForm"} style={{ display: "flex", justifyContent: "space-between", border: "1px solid black", 
+                                                  padding: "10px", backgroundColor: "tan", fontSize: "20px", marginBottom:"30px" }}>
 
-            <span>  Phone Number:</span>
-            <input onChange={(event) => {
-                setPhoneNumber(() => event.target.value)
-            }}></input>
-            <span>{phoneNumber}</span>
+            <div>
+                <span>  Tenant Name: </span>
+                <input onChange={(event) => {
+                    setName(() => event.target.value)
+                }}></input>
+            </div>
 
-            <span>  Email:</span>
-            <input onChange={(event) => {
-                setEmail(() => event.target.value)
-            }}></input>
-            <span>{email}</span>
+            <div>
+                <span>  Phone Number: </span>
+                <input onChange={(event) => {
+                    setPhoneNumber(() => event.target.value)
+                }}></input>
+            </div>
 
-            <span>  Check In:</span>
-            <input type="datetime-local" onChange={(event) => {
-                setCheckIn(() => event.target.value)
-            }}></input>
-            <span>{checkIn}</span>
+            <div>
+                <span>  Email: </span>
+                <input onChange={(event) => {
+                    setEmail(() => event.target.value)
+                }}></input>
+            </div>
 
-            <span>  Check Out:</span>
-            <input type="datetime-local" onChange={(event) => {
-                setCheckOut(() => event.target.value)
-            }}></input>
-            <span>{checkOut}</span>
+            <div>
+                <span>  Check In: </span>
+                <input type="date" onChange={(event) => {
+                    setCheckIn(() => event.target.value)
+                }}></input>
+            </div>
 
-            <span>  Apt Number:</span>
-            <input onChange={(event) => {
-                setAptNumber(() => Number(event.target.value))
-            }}></input>
-            <span>{aptNumber}</span>
+            <div>
+                <span>  Check Out: </span>
+                <input type="date" onChange={(event) => {
+                    setCheckOut(() => event.target.value)
+                }}></input>
+            </div>
 
-            <span>  Submit:</span>
-            <button onClick={() => {
-                if (name !== "" && email !== "" && checkIn !== "" && checkOut !== "" && aptNumber !== 0) {
+            <div>
+                <span>  Apt Number: </span>
+                <input onChange={(event) => {
+                    setAptNumber(() => Number(event.target.value))
+                }}></input>
+            </div>
 
-                    addDoc(collection(database, "tenants"), {
-                        id: size + 1,
-                        name: name,
-                        phoneNumber: phoneNumber,
-                        email: email,
-                        checkIn: ,
-                        checkOut: checkOut,
-                        apt: aptNumber,
-                    });
-                    size += 1;
-                }
-            }}>Add Tenant</button>
-
-
+            <div>
+                <button onClick={() => {
+                    if (name !== "" && email !== "" && checkIn !== "" && checkOut !== "" && aptNumber !== 0) {
+                        addDoc(collection(database, "tenants"), {
+                            id: tenantAmount + 1,
+                            name: name,
+                            phoneNumber: phoneNumber,
+                            email: email,
+                            checkIn: Timestamp.fromDate(new Date(checkIn)),
+                            checkOut: Timestamp.fromDate(new Date(checkOut)),
+                            apt: aptNumber,
+                        });
+                        tenantAmount += 1;
+                        setTimeout(() => window.location.reload(), 1000)
+                    }
+                }}>Add Tenant</button>
+            </div>
         </div>)
 }
